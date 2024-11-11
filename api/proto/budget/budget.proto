@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+
+package budget;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "proto;budget";
+
+service BudgetService {
+  rpc AddBudget(AddBudgetRequest) returns (AddBudgetResponse);
+  rpc AddCategory(AddCategoryRequest) returns (GetBudgetResponse);
+  rpc UpdateCategory(UpdateCategoryRequest) returns (GetBudgetResponse);
+  rpc DeleteCategory(DeleteCategoryRequest) returns (google.protobuf.Empty);
+  rpc GetBudget(GetBudgetRequest) returns (GetBudgetResponse);
+  rpc GetBudgetList(GetBudgetListRequest) returns (GetBudgetListResponse);
+  rpc UpdateBudget(UpdateBudgetRequest) returns (GetBudgetResponse);
+  rpc DeleteBudget(DeleteBudgetRequest) returns (google.protobuf.Empty);
+}
+
+message AddBudgetRequest {
+  string userId = 1;
+  string name = 2;
+  float limit = 3;
+  string period = 4;
+  string start = 5;
+  string end = 6;
+}
+
+message AddBudgetResponse {
+  string budgetId = 1;
+}
+
+message AddCategoryRequest {
+  string budgetId = 1;
+  string name = 2;
+  float limit = 3;
+}
+
+message GetBudgetRequest {
+  string budgetId = 1;
+  string userId = 2;
+}
+
+message GetBudgetResponse {
+  Budget budget = 1;
+}
+
+message GetBudgetListRequest {
+  string userId = 1;
+}
+
+message GetBudgetListResponse {
+  repeated Budget budgets = 1;
+}
+
+message DeleteCategoryRequest {
+  string budgetId = 1;
+  string categoryId = 2;
+}
+
+message DeleteBudgetRequest {
+  string budgetId = 1;
+}
+
+message UpdateBudgetRequest {
+    UpdateBudget update = 1;
+}
+
+message UpdateCategoryRequest {
+    UpdateCategory update = 1;
+}
+
+message UpdateCategory {
+  string budgetId = 1;
+  string categoryId = 2;
+  string name = 3;
+  float limit = 4;
+}
+
+message UpdateBudget {
+  string budgetId = 1;
+  string userId = 2;
+  string name = 3;
+  float limit = 4;
+  string start = 5;
+  string end = 6;
+}
+
+message Budget {
+  string budgetId = 1;
+  string name = 2;
+  float limit = 3;
+  string start = 4;
+  string end = 5;
+  repeated Category category = 6;
+}
+
+message Category {
+    string categoryId = 1;
+    string name = 2;
+    float limit = 3;
+}
