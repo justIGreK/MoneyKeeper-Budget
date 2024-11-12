@@ -5,42 +5,49 @@ import "time"
 type Budget struct {
 	ID        string     `bson:"_id,omitempty"`
 	UserID    string     `bson:"user_id"`
-	Name      string     `bson:"name"`
-	Limit     float32    `bson:"limit"`
+	Name      string     `bson:"name"` 
+	Limit     float64    `bson:"limit"`
 	StartDate time.Time  `bson:"start"`
 	EndDate   time.Time  `bson:"end"`
-	Category  []Category `bson:"categories,omitempty"`
+	Category  []Category `bson:"categories"`
 }
 
 type Category struct {
-	ID    string  `bson:"category_id"`
+	ID    string  `bson:"category_id,omitempty"`
 	Name  string  `bson:"name"`
-	Limit float32 `bson:"limit"`
+	Limit float64 `bson:"limit"`
 }
 type CreateBudget struct {
-	UserID    string
-	Name      string
-	Limit     float32
-	Period    string
+	UserID    string `validate:"required"`
+	Name      string `validate:"required"`
+	Limit     float64 `validate:"required"`
+	Period    string 
 	StartDate string
 	EndDate   string
 }
 
-type UpdateBudget struct{
-	BudgetID string
-	UserID string
-	Name string
-	Limit float32
-	Start string
-	End string
+type CreateCategory struct {
+	BudgetID string `validate:"required"`
+	UserID    string `validate:"required"`
+	Name      string `validate:"required"`
+	Limit     float64 `validate:"required"`
 }
 
-type UpdateCategory struct{
-	BudgetID string
-	CategoryID string
-	UserID string
-	Name string
-	Limit float32
-	Start string
-	End string
+type GetUpdateBudget struct{
+	BudgetID string `validate:"required"`
+	UserID string `validate:"required"`
+	Name *string 
+	Limit *float64 
+	Start *string
+	End *string
 }
+
+
+type GetUpdateCategory struct{
+	BudgetID string `validate:"required"`
+	CategoryID string `validate:"required"`
+	UserID string `validate:"required"`
+	Name *string
+	Limit *float64
+}
+

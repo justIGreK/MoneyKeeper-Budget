@@ -4,6 +4,7 @@ syntax = "proto3";
 package budget;
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
 
 option go_package = "proto;budget";
 
@@ -33,8 +34,9 @@ message AddBudgetResponse {
 
 message AddCategoryRequest {
   string budgetId = 1;
-  string name = 2;
-  float limit = 3;
+  string userId = 2;
+  string name = 3;
+  float limit = 4;
 }
 
 message GetBudgetRequest {
@@ -56,11 +58,13 @@ message GetBudgetListResponse {
 
 message DeleteCategoryRequest {
   string budgetId = 1;
-  string categoryId = 2;
+  string userId = 2;
+  string categoryId = 3;
 }
 
 message DeleteBudgetRequest {
   string budgetId = 1;
+  string userId = 2;
 }
 
 message UpdateBudgetRequest {
@@ -73,18 +77,19 @@ message UpdateCategoryRequest {
 
 message UpdateCategory {
   string budgetId = 1;
-  string categoryId = 2;
-  string name = 3;
-  float limit = 4;
+  string userId = 2;
+  string categoryId = 3;
+  google.protobuf.StringValue name = 4;
+  google.protobuf.DoubleValue limit = 5;
 }
 
 message UpdateBudget {
   string budgetId = 1;
   string userId = 2;
-  string name = 3;
-  float limit = 4;
-  string start = 5;
-  string end = 6;
+  google.protobuf.StringValue name = 3;
+  google.protobuf.DoubleValue limit = 4;
+  google.protobuf.StringValue start = 5;
+  google.protobuf.StringValue end = 6;
 }
 
 message Budget {
